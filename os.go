@@ -46,7 +46,7 @@ func discoverKernel() (string, error) {
 
 func discoverLogger() ([]string, error) {
 	var result []string
-	for _, logger := range []string{"systemd-journal", "rsyslog", "syslog-ng"} {
+	for _, logger := range []string{"systemd-journal", "rsyslogd", "syslog-ng"} {
 		running, err := runningProcesses(logger)
 		if err != nil {
 			return nil, fmt.Errorf("discovering Logger failed, %v", err)
