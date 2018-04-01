@@ -76,8 +76,5 @@ func main() {
 	err = discoverDNS(host)
 	line("DNS", "", err)
 
-	IPs, err := discoverAddresses()
-	lines("IPs", IPs, err)
-
 	line("Internet", "", discoverInternet(host))
 }

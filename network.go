@@ -15,19 +15,6 @@ func discoverInternet(host string) error {
 	return nil
 }
 
-func discoverAddresses() ([]string, error) {
-	addrs, err := net.InterfaceAddrs()
-	if err != nil {
-		return nil, fmt.Errorf("unable to get IPs, %v", err)
-	}
-	var result []string
-	for _, addr := range addrs {
-		result = append(result, addr.String())
-	}
-	return result, nil
-
-}
-
 func discoverInterfaces() ([]string, error) {
 
 	interfaces, err := net.Interfaces()
@@ -42,6 +29,13 @@ func discoverInterfaces() ([]string, error) {
 			result[index] = fmt.Sprintf("%v, %v", result[index], ifi.HardwareAddr)
 		}
 		result[index] = fmt.Sprintf("%v, %v", result[index], ifi.Flags)
+		addrs, err := ifi.Addrs()
+		if err != nil {
+			return nil, fmt.Errorf("unable to get IP addresses, %v", err)
+		}
+		for _, addr := range addrs {
+			result[index] = fmt.Sprintf("%v, %v", result[index], addr)
+		}
 	}
 	return result, nil
 }
